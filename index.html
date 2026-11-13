@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>toot ONE</title>
+<meta name="description" content="Рабочее приложение директоров магазинов toot">
+<meta name="theme-color" content="#121110">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="toot ONE">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  html, body { margin: 0; height: 100%; background: #121110; }
+  /* приложение (Google Apps Script) открывается на весь экран внутри этой страницы */
+  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  .splash { position: fixed; inset: 0; z-index: 2; background: #121110; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #9c958c; transition: opacity .3s; }
+  .splash img { width: 140px; height: auto; }
+  .splash a { color: #ff7a3d; }
+  .gone { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="splash" id="splash">
+  <img src="one-orange.png" alt="toot ONE">
+  <div id="msg">Загружаю…</div>
+</div>
+<iframe id="app" title="toot ONE" allow="camera; geolocation; clipboard-write"
+  src="https://script.google.com/macros/s/AKfycbxekzfdKCaAo7xpDOnh3OptT-k4lmVmhQ3shd6MV3vEKlxD82Py7dZrY4JqB60hL-S8/exec"></iframe>
+<script>
+  var app = document.getElementById('app'), splash = document.getElementById('splash');
+  app.addEventListener('load', function () { splash.classList.add('gone'); });
+  // если за 20 секунд не открылось — даём прямую ссылку
+  setTimeout(function () {
+    if (splash.classList.contains('gone')) return;
+    document.getElementById('msg').innerHTML = 'Долго грузится. Проверьте интернет или <a href="' + app.src + '">откройте напрямую</a>.';
+  }, 20000);
+</script>
+</body>
+</html>
